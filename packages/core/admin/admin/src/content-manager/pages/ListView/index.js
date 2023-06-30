@@ -33,6 +33,7 @@ import {
 } from '@strapi/helper-plugin';
 import { ArrowLeft, Cog, Plus } from '@strapi/icons';
 import axios from 'axios';
+import getReviewWorkflowsColumn from 'ee_else_ce/content-manager/components/DynamicTable/CellContent/ReviewWorkflowsStage/getTableColumn';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
 import { stringify } from 'qs';
@@ -47,6 +48,7 @@ import { INJECT_COLUMN_IN_TABLE } from '../../../exposedHooks';
 import { selectAdminPermissions } from '../../../pages/App/selectors';
 import { InjectionZone } from '../../../shared/components';
 import AttributeFilter from '../../components/AttributeFilter';
+import BulkActionsBar from '../../components/DynamicTable/BulkActionsBar';
 import { createYupSchema, getRequestUrl, getTrad } from '../../utils';
 
 import { getData, getDataSucceeded, onChangeListHeaders, onResetListHeaders } from './actions';
@@ -390,6 +392,17 @@ function ListView({
       return formattedHeaders;
     }
 
+    // this should not exist. Ideally we would use registerHook() similar to what has been done
+    // in the i18n plugin. In order to do that review-workflows should have been a plugin. In
+    // a future iteration we need to find a better pattern.
+
+    // In CE this will return null - in EE a column definition including the custom formatting component.
+    const reviewWorkflowColumn = getReviewWorkflowsColumn(layout);
+
+    if (reviewWorkflowColumn) {
+      formattedHeaders.push(reviewWorkflowColumn);
+    }
+
     return [
       ...formattedHeaders,
       {
@@ -550,6 +563,18 @@ function ListView({
               onOpenDeleteAllModalTrackedEvent="willBulkDeleteEntries"
               withBulkActions
               withMainAction={canDelete && isBulkable}
+              renderBulkActionsBar={({ selectedEntries, clearSelectedEntries }) => (
+                <BulkActionsBar
+                  showPublish={canPublish && hasDraftAndPublish}
+                  showDelete={canDelete}
+                  onConfirmDeleteAll={handleConfirmDeleteAllData}
+                  onConfirmPublishAll={handleConfirmPublishAllData}
+                  onConfirmUnpublishAll={handleConfirmUnpublishAllData}
+                  selectedEntries={selectedEntries}
+                  clearSelectedEntries={clearSelectedEntries}
+                />
+              )}
+              bulkAction
             >
               <TableRows
                 canCreate={canCreate}
