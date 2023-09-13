@@ -81,7 +81,7 @@
   "dependencies": {
     "@koa/cors": "3.4.3",
     "@koa/router": "10.1.1",
-    "@strapi/admin": "4.11.5",
+    "@strapi/admin": "4.12.1",
     "@strapi/data-transfer": "4.11.5",
     "@strapi/database": "4.11.5",
     "@strapi/generate-new": "4.11.5",
