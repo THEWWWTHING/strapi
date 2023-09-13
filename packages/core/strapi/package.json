@@ -93,7 +93,7 @@
     "@strapi/plugin-email": "4.11.5",
     "@strapi/plugin-upload": "4.11.5",
     "@strapi/typescript-utils": "4.11.5",
-    "@strapi/utils": "4.11.5",
+    "@strapi/utils": "4.11.7",
     "bcryptjs": "2.4.3",
     "boxen": "5.1.2",
     "chalk": "4.1.2",
