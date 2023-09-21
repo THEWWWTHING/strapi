@@ -1,10 +1,10 @@
 'use strict';
 
-const { features } = require('@strapi/strapi/lib/utils/ee');
+const { features } = require('@strapi/strapi/dist/utils/ee').default;
 const { register } = require('@strapi/provider-audit-logs-local');
 const { scheduleJob } = require('node-schedule');
 const createAuditLogsService = require('../audit-logs');
-const createEventHub = require('../../../../../strapi/lib/services/event-hub');
+const createEventHub = require('../../../../../strapi/dist/services/event-hub').default;
 
 jest.mock('../../../../server/register');
 
@@ -12,10 +12,12 @@ jest.mock('../../utils', () => ({
   getService: jest.fn().mockReturnValue({}),
 }));
 
-jest.mock('@strapi/strapi/lib/utils/ee', () => ({
-  features: {
-    isEnabled: jest.fn(),
-    get: jest.fn(),
+jest.mock('@strapi/strapi/dist/utils/ee', () => ({
+  default: {
+    features: {
+      isEnabled: jest.fn(),
+      get: jest.fn(),
+    },
   },
 }));
 
@@ -33,7 +35,6 @@ describe('Audit logs service', () => {
   });
 
   afterAll(() => {
-    jest.clearAllMocks();
     jest.useRealTimers();
   });
 
@@ -202,6 +203,7 @@ describe('Audit logs service', () => {
       await auditLogsService.register();
 
       jest.useFakeTimers().setSystemTime(new Date('1970-01-01T00:00:00.000Z'));
+
       await strapi.eventHub.emit('entry.create', { meta: 'test' });
 
       // Sends the processed event to a provider
