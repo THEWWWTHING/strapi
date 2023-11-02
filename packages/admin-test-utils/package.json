@@ -73,7 +73,7 @@
   "devDependencies": {
     "@reduxjs/toolkit": "1.9.7",
     "@strapi/pack-up": "workspace:*",
-    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/jest-dom": "5.17.0",
     "eslint-config-custom": "4.15.0",
     "tsconfig": "4.15.0"
   },
