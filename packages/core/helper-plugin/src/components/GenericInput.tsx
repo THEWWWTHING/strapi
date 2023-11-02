@@ -30,7 +30,7 @@ import { useFocusInputField } from '../hooks/useFocusInputField';
 import { pxToRem } from '../utils/pxToRem';
 
 import type { InputType, TranslationMessage } from '../types';
-import type { Attribute } from '@strapi/strapi';
+import type { Attribute } from '@strapi/types';
 
 interface InputOption {
   metadatas: {
@@ -48,8 +48,8 @@ interface CustomInputProps<TAttribute extends Attribute.Any>
   hint?: string | React.JSX.Element | (string | React.JSX.Element)[];
 }
 
-interface GenericInputProps<TAttribute extends Attribute.Any = Attribute.Any> {
-  attribute: TAttribute;
+export interface GenericInputProps<TAttribute extends Attribute.Any = Attribute.Any> {
+  attribute?: TAttribute;
   autoComplete?: string;
   customInputs?: Record<string, React.ComponentType<CustomInputProps<TAttribute>>>;
   description?: TranslationMessage;
@@ -101,7 +101,7 @@ const GenericInput = ({
   const { formatMessage } = useIntl();
 
   // TODO: Workaround to get the field hint values if they exist on the type
-  const getFieldHintValue = (attribute: Attribute.Any, key: keyof FieldSchema) => {
+  const getFieldHintValue = (attribute?: Attribute.Any, key?: keyof FieldSchema) => {
     if (!attribute) return;
 
     if (key === 'minLength' && key in attribute) {
@@ -227,7 +227,9 @@ const GenericInput = ({
           onChange={(json) => {
             // Default to null when the field is not required and there is no input value
             const value =
-              'required' in attribute && !attribute?.required && !json.length ? null : json;
+              attribute && 'required' in attribute && !attribute?.required && !json.length
+                ? null
+                : json;
             onChange({ target: { name, value } }, false);
           }}
           minHeight={pxToRem(252)}

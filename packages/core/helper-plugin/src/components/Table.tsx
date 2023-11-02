@@ -27,7 +27,7 @@ import { SortIcon } from '../icons/SortIcon';
 import { ConfirmDialog } from './ConfirmDialog';
 import { EmptyStateLayout, EmptyStateLayoutProps } from './EmptyStateLayout';
 
-import type { Attribute } from '@strapi/strapi';
+import type { Attribute } from '@strapi/types';
 
 /* -------------------------------------------------------------------------------------------------
  * Context
@@ -360,7 +360,7 @@ interface EmptyBodyProps extends EmptyStateLayoutProps {
 
 const EmptyBody = ({ contentType, ...rest }: EmptyBodyProps) => {
   const { rows, colCount, isLoading } = useTableContext();
-  const [{ query }] = useQueryParams();
+  const [{ query }] = useQueryParams<{ filters?: string[] }>();
   const hasFilters = query?.filters !== undefined;
   const content = hasFilters
     ? {

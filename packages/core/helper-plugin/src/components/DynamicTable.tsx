@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, useState } from 'react';
+import * as React from 'react';
 
 import {
   Button,
@@ -67,12 +67,12 @@ const Table = ({
   withMainAction = false,
   renderBulkActionsBar,
   ...rest
-}: TableProps<any>) => {
-  const [selectedEntries, setSelectedEntries] = useState<Array<number | string>>([]);
-  const [showConfirmDeleteAll, setShowConfirmDeleteAll] = useState(false);
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  const [isConfirmButtonLoading, setIsConfirmButtonLoading] = useState(false);
-  const [{ query }] = useQueryParams();
+}: TableProps<{ id: string }>) => {
+  const [selectedEntries, setSelectedEntries] = React.useState<Array<number | string>>([]);
+  const [showConfirmDeleteAll, setShowConfirmDeleteAll] = React.useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = React.useState(false);
+  const [isConfirmButtonLoading, setIsConfirmButtonLoading] = React.useState(false);
+  const [{ query }] = useQueryParams<{ filters: string[] }>();
   const { formatMessage } = useIntl();
   const { trackUsage } = useTracking();
   const ROW_COUNT = rows.length + 1;
@@ -209,8 +209,8 @@ const Table = ({
             action={action}
           />
         ) : (
-          Children.toArray(children).map((child) =>
-            cloneElement(child as React.ReactElement<any>, {
+          React.Children.toArray(children).map((child) =>
+            React.cloneElement(child as React.ReactElement, {
               entriesToDelete: selectedEntries,
               onClickDelete: handleClickDelete,
               onSelectRow: handleSelectRow,
@@ -271,8 +271,8 @@ const TableHead = ({
   withBulkActions,
 }: TableHeadProps) => {
   const { formatMessage } = useIntl();
-  const [{ query }, setQuery] = useQueryParams();
-  const sort = typeof query?.sort === 'string' ? query.sort : '';
+  const [{ query }, setQuery] = useQueryParams<{ sort?: string }>();
+  const sort = query?.sort ?? '';
   const [sortBy, sortOrder] = sort.split(':');
   const isIndeterminate = !areAllEntriesSelected && entriesToDelete.length > 0;
 
