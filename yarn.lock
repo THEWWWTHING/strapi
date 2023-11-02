@@ -8277,7 +8277,7 @@ __metadata:
   dependencies:
     "@strapi/pack-up": "workspace:*"
     "@types/jest": "npm:29.5.2"
-    aws-sdk: "npm:2.1472.0"
+    aws-sdk: "npm:2.1486.0"
     eslint-config-custom: "npm:4.15.0"
     lodash: "npm:4.17.21"
     tsconfig: "npm:4.15.0"
@@ -11671,9 +11671,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:2.1472.0":
-  version: 2.1472.0
-  resolution: "aws-sdk@npm:2.1472.0"
+"aws-sdk@npm:2.1486.0":
+  version: 2.1486.0
+  resolution: "aws-sdk@npm:2.1486.0"
   dependencies:
     buffer: "npm:4.9.2"
     events: "npm:1.1.1"
@@ -11685,7 +11685,7 @@ __metadata:
     util: "npm:^0.12.4"
     uuid: "npm:8.0.0"
     xml2js: "npm:0.5.0"
-  checksum: 4f69dabf275b3468f5039f3f796f862ee1b2b723be810a1e8f032cea8f6398ab369b076b82df81983cb06d0ff3647caff828b80486ca84054dac33c4b23bc9a0
+  checksum: 744b52161715b5962fe79f12cbf2bfd43d9ca8188862ce38e738d6d6a1bb1f6071ab4691f63643a06fcd148722e38206235ac7fb1b138aa8086657f12eea44a8
   languageName: node
   linkType: hard
 
