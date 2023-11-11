@@ -83,7 +83,7 @@
     "@strapi/types": "workspace:*",
     "@strapi/typescript-utils": "4.15.0",
     "@strapi/utils": "4.15.0",
-    "axios": "1.5.0",
+    "axios": "1.6.0",
     "bcryptjs": "2.4.3",
     "boxen": "5.1.2",
     "browserslist": "^4.22.1",
