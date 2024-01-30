@@ -17,22 +17,25 @@ const moduleNameMapper = {
   '^styled-components$': path.join(__dirname, 'node_modules/styled-components'),
 };
 
+/**
+ * @type {import('jest').Config}
+ */
 module.exports = {
   rootDir: __dirname,
   moduleNameMapper,
   /* Tells jest to ignore duplicated manual mock files, such as index.js */
   modulePathIgnorePatterns: ['.*__mocks__.*'],
-  testPathIgnorePatterns: ['node_modules/', '__tests__'],
+  testPathIgnorePatterns: ['node_modules/', 'dist/'],
   globalSetup: '@strapi/admin-test-utils/global-setup',
   setupFiles: ['@strapi/admin-test-utils/environment'],
   setupFilesAfterEnv: ['@strapi/admin-test-utils/after-env'],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.js$': [
+    '^.+\\.js(x)?$': [
       '@swc/jest',
       {
         env: {
-          coreJs: '3.28.0',
+          coreJs: '3.33.0',
           mode: 'usage',
         },
 
@@ -46,11 +49,37 @@ module.exports = {
         },
       },
     ],
+    '\\.ts$': [
+      '@swc/jest',
+      {
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+          },
+        },
+      },
+    ],
+    '\\.tsx$': [
+      '@swc/jest',
+      {
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+          },
+          transform: {
+            react: {
+              runtime: 'automatic',
+            },
+          },
+        },
+      },
+    ],
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       path.join(__dirname, 'fileTransformer.js'),
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(react-dnd|dnd-core|react-dnd-html5-backend|@strapi/design-system|@strapi/icons|fractional-indexing)/)',
+    'node_modules/(?!(react-dnd|dnd-core|react-dnd-html5-backend|@react-dnd|fractional-indexing)/)',
   ],
   testMatch: ['**/tests/**/?(*.)+(spec|test).[jt]s?(x)'],
   testEnvironmentOptions: {
