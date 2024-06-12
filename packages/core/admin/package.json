@@ -172,7 +172,7 @@
     "@strapi/admin-test-utils": "4.19.0",
     "@strapi/data-transfer": "4.19.0",
     "@strapi/pack-up": "4.19.0",
-    "@strapi/plugin-content-manager": "4.19.0",
+    "@strapi/plugin-content-manager": "4.19.1",
     "@strapi/strapi": "4.19.0",
     "@testing-library/dom": "9.2.0",
     "@testing-library/react": "14.0.0",
